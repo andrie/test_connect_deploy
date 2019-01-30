@@ -32,10 +32,10 @@ if [ -z "${CONNECT_API_KEY}" ] ; then
     exit 1
 fi
 
-if [ $# -ne 1 ] ; then
-    echo "usage: $0 <content-guid>"
-    exit 1
-fi
+# if [ $# -ne 1 ] ; then
+#     echo "usage: $0 <content-guid>"
+#     exit 1
+# fi
 
 CONTENT="$1"
 BUNDLE_PATH="bundle.tar.gz"
