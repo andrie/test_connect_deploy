@@ -63,7 +63,7 @@ Steps:
 The `.travis.yml` file basically just triggers the `deploy_to_connect.sh` script to deploy an artefact.
 
 
-```{r engine='bash', echo=FALSE, comment="", include=FALSE}
+```{r engine='bash', echo=FALSE, comment="", eval=FALSE}
 cat .travis.yml
 ```
 
@@ -72,7 +72,7 @@ cat .travis.yml
 And the `deploy_to_connect.sh` looks like this:
 
 
-```{r engine='bash', echo=FALSE, comment="", include=FALSE}
+```{r engine='bash', echo=FALSE, comment="", eval=FALSE}
 cat deploy_to_connect.sh
 ```
 
