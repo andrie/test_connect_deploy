@@ -9,22 +9,73 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Objective
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This document describes how to automatically deploy an artefact from Github to Connect, using Travis as the continuous integration tool.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## The sequence of events
 
-```{r cars}
-summary(cars)
+Step:
+
+1. Deploy your artefact to Connect using push-button deployment
+2. Make a note of your API key and GUID from Connect, and configure these on Travis
+3. Deploy programmatically on Travis
+
+```{r, echo=FALSE}
+library(DiagrammeR)
+
+DiagrammeR("
+sequenceDiagram;
+  participant P as Project
+  participant G as Github
+  participant T as Travis
+  participant C as Connect
+  opt first deployment
+    P->>C: push button deploy
+  end
+  opt copy env vars
+    C-->>T: C_API_KEY
+    C-->>T: C_SERVER
+    C-->>T: GUID
+  end
+  opt programmatic deployment
+    P->>G: commit and push;
+    G-->>T: commit hook;
+    T->>C: deploy using bash and API
+  end
+   
+")
 ```
 
-## Including Plots
+## Travis configuration
 
-You can also embed plots, for example:
+Steps:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+1. Enable Travis deployment for your repo
+2. Add your secret information as environment variables to Travis
+3. Edit your `.travis.yml` file
+
+
+### Relevant files {.tabset}
+
+#### .travis.yml
+
+The `.travis.yml` file basically just triggers the `deploy_to_connect.sh` script to deploy an artefact.
+
+
+```{r engine='bash', echo=FALSE, comment=""}
+cat .travis.yml
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+#### deploy_to_connect.sh
+
+And the `deploy_to_connect.sh` looks like this:
+
+
+```{r engine='bash', echo=FALSE, comment=""}
+cat deploy_to_connect.sh
+```
+
+## Conclusion
+
+foo
